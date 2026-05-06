@@ -1,15 +1,17 @@
 console.log("Hello world!");
+const select = document.querySelector("#sw-select");
 
-async function getPlanet(id) {
-  const resp = await fetch(`https://swapi.info/api/planets/${id}`);
+select.addEventListener("change", async (event) => {
+  const category = event.target.value;
+  if (!category) return; // guard clause — user picked the placeholder
+
+  const resp = await fetch(`https://swapi.info/api/${category}/`);
 
   if (!resp.ok) {
-    console.error(`Request failed: ${resp.status}`);
+    console.error(`Failed: ${resp.status}`);
     return;
   }
 
   const data = await resp.json();
   console.info(data);
-}
-
-getPlanet(999);
+});
